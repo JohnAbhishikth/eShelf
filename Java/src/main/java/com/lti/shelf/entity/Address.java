@@ -24,7 +24,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "address_tbl")
-public class AddressTbl implements Serializable {
+public class Address implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -72,7 +72,7 @@ public class AddressTbl implements Serializable {
 	 * @param state
 	 * @param zip
 	 */
-	public AddressTbl(String addressId, String city, String name, String relationship, String state, int zip) {
+	public Address(String addressId, String city, String name, String relationship, String state, int zip) {
 		this.addressId = addressId;
 		this.city = city;
 		this.name = name;

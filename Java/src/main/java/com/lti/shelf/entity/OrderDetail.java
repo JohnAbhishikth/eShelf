@@ -43,7 +43,7 @@ public class OrderDetail implements Serializable {
 	@Getter
 	@ManyToOne
 	@JoinColumn(name = "address_id")
-	private AddressTbl addressTbl;
+	private Address addressTbl;
 
 	// bi-directional many-to-one association to CustomerLogin
 	@Setter
@@ -64,7 +64,7 @@ public class OrderDetail implements Serializable {
 	 * @param dayOfDelivery
 	 * @param addressTbl
 	 */
-	public OrderDetail(OrderDetailPK id, Timestamp dayOfDelivery, AddressTbl addressTbl) {
+	public OrderDetail(OrderDetailPK id, Timestamp dayOfDelivery, Address addressTbl) {
 		this.id = id;
 		this.dayOfDelivery = dayOfDelivery;
 		this.addressTbl = addressTbl;

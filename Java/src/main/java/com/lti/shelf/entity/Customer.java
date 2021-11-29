@@ -36,7 +36,7 @@ public class Customer implements Serializable {
 
 	// bi-directional many-to-one association to AddressTbl
 	@OneToMany(mappedBy = "customerLogin")
-	private List<AddressTbl> addressTbls;
+	private List<Address> addressTbls;
 
 	// bi-directional many-to-one association to BookReview
 	@OneToMany(mappedBy = "customerLogin")
@@ -50,14 +50,14 @@ public class Customer implements Serializable {
 	@OneToMany(mappedBy = "customerLogin")
 	private List<ShoppingCartItem> shoppingCartItems;
 
-	public AddressTbl addAddressTbl(AddressTbl addressTbl) {
+	public Address addAddressTbl(Address addressTbl) {
 		getAddressTbls().add(addressTbl);
 		addressTbl.setCustomerLogin(this);
 
 		return addressTbl;
 	}
 
-	public AddressTbl removeAddressTbl(AddressTbl addressTbl) {
+	public Address removeAddressTbl(Address addressTbl) {
 		getAddressTbls().remove(addressTbl);
 		addressTbl.setCustomerLogin(null);
 
