@@ -44,7 +44,7 @@ public class AddressTbl implements Serializable {
 	// bi-directional many-to-one association to CustomerLogin
 	@ManyToOne
 	@JoinColumn(name = "user_id")
-	private CustomerLogin customerLogin;
+	private Customer customerLogin;
 
 	// bi-directional many-to-one association to OrderDetail
 	@OneToMany(mappedBy = "addressTbl")

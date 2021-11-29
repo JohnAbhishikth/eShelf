@@ -42,7 +42,7 @@ public class ShoppingCartItem implements Serializable {
 	// bi-directional many-to-one association to CustomerLogin
 	@ManyToOne
 	@JoinColumn(name = "user_id")
-	private CustomerLogin customerLogin;
+	private Customer customerLogin;
 
 	/**
 	 * @param id

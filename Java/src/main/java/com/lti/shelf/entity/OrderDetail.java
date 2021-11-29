@@ -50,7 +50,7 @@ public class OrderDetail implements Serializable {
 	@Getter
 	@ManyToOne
 	@JoinColumn(name = "user_id")
-	private CustomerLogin customerLogin;
+	private Customer customerLogin;
 
 	// bi-directional many-to-one association to PurchaseHistory
 	@Getter

@@ -44,7 +44,7 @@ public class BookReview implements Serializable {
 	// bi-directional many-to-one association to CustomerLogin
 	@ManyToOne
 	@JoinColumn(name = "user_id")
-	private CustomerLogin customerLogin;
+	private Customer customerLogin;
 
 	/**
 	 * @param id
@@ -55,7 +55,7 @@ public class BookReview implements Serializable {
 	 * @param customerLogin
 	 */
 	public BookReview(BookReviewPK id, int rating, Timestamp reviewDate, String reviews, Book book,
-			CustomerLogin customerLogin) {
+			Customer customerLogin) {
 		this.id = id;
 		this.rating = rating;
 		this.reviewDate = reviewDate;

@@ -18,7 +18,7 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "customer_login")
-public class CustomerLogin implements Serializable {
+public class Customer implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -113,7 +113,7 @@ public class CustomerLogin implements Serializable {
 	 * @param password
 	 * @param phoneNumber
 	 */
-	public CustomerLogin(String userId, String email, String name, String password, String phoneNumber) {
+	public Customer(String userId, String email, String name, String password, String phoneNumber) {
 		this.userId = userId;
 		this.email = email;
 		this.name = name;
