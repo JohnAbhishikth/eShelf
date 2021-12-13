@@ -1,13 +1,18 @@
 package com.lti.shelf.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import java.util.List;
+import java.util.Objects;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.List;
 
 /**
  * The persistent class for the customer_login database table.
@@ -34,77 +39,17 @@ public class Customer implements Serializable {
 	@Column(name = "phone_number")
 	private String phoneNumber;
 
-	// bi-directional many-to-one association to AddressTbl
 	@OneToMany(mappedBy = "customerLogin")
 	private List<Address> addressTbls;
 
-	// bi-directional many-to-one association to BookReview
 	@OneToMany(mappedBy = "customerLogin")
 	private List<BookReview> bookReviews;
 
-	// bi-directional many-to-one association to OrderDetail
 	@OneToMany(mappedBy = "customerLogin")
 	private List<OrderDetail> orderDetails;
 
-	// bi-directional many-to-one association to ShoppingCartItem
 	@OneToMany(mappedBy = "customerLogin")
 	private List<ShoppingCartItem> shoppingCartItems;
-
-	public Address addAddressTbl(Address addressTbl) {
-		getAddressTbls().add(addressTbl);
-		addressTbl.setCustomerLogin(this);
-
-		return addressTbl;
-	}
-
-	public Address removeAddressTbl(Address addressTbl) {
-		getAddressTbls().remove(addressTbl);
-		addressTbl.setCustomerLogin(null);
-
-		return addressTbl;
-	}
-
-	public BookReview addBookReview(BookReview bookReview) {
-		getBookReviews().add(bookReview);
-		bookReview.setCustomerLogin(this);
-
-		return bookReview;
-	}
-
-	public BookReview removeBookReview(BookReview bookReview) {
-		getBookReviews().remove(bookReview);
-		bookReview.setCustomerLogin(null);
-
-		return bookReview;
-	}
-
-	public OrderDetail addOrderDetail(OrderDetail orderDetail) {
-		getOrderDetails().add(orderDetail);
-		orderDetail.setCustomerLogin(this);
-
-		return orderDetail;
-	}
-
-	public OrderDetail removeOrderDetail(OrderDetail orderDetail) {
-		getOrderDetails().remove(orderDetail);
-		orderDetail.setCustomerLogin(null);
-
-		return orderDetail;
-	}
-
-	public ShoppingCartItem addShoppingCartItem(ShoppingCartItem shoppingCartItem) {
-		getShoppingCartItems().add(shoppingCartItem);
-		shoppingCartItem.setCustomerLogin(this);
-
-		return shoppingCartItem;
-	}
-
-	public ShoppingCartItem removeShoppingCartItem(ShoppingCartItem shoppingCartItem) {
-		getShoppingCartItems().remove(shoppingCartItem);
-		shoppingCartItem.setCustomerLogin(null);
-
-		return shoppingCartItem;
-	}
 
 	/**
 	 * @param userId
@@ -119,6 +64,23 @@ public class Customer implements Serializable {
 		this.name = name;
 		this.password = password;
 		this.phoneNumber = phoneNumber;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(email, name, password, phoneNumber, userId);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof Customer))
+			return false;
+		Customer other = (Customer) obj;
+		return Objects.equals(email, other.email) && Objects.equals(name, other.name)
+				&& Objects.equals(password, other.password) && Objects.equals(phoneNumber, other.phoneNumber)
+				&& Objects.equals(userId, other.userId);
 	}
 
 }

@@ -2,6 +2,7 @@ package com.lti.shelf.entity;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -40,59 +41,14 @@ public class Book implements Serializable {
 
 	private double price;
 
-	// bi-directional many-to-one association to BookReview
 	@OneToMany(mappedBy = "book")
 	private List<BookReview> bookReviews;
 
-	// bi-directional many-to-one association to PurchaseHistory
 	@OneToMany(mappedBy = "book")
 	private List<PurchaseHistory> purchaseHistories;
 
-	// bi-directional many-to-one association to ShoppingCartItem
 	@OneToMany(mappedBy = "book")
 	private List<ShoppingCartItem> shoppingCartItems;
-
-	public BookReview addBookReview(BookReview bookReview) {
-		getBookReviews().add(bookReview);
-		bookReview.setBook(this);
-
-		return bookReview;
-	}
-
-	public BookReview removeBookReview(BookReview bookReview) {
-		getBookReviews().remove(bookReview);
-		bookReview.setBook(null);
-
-		return bookReview;
-	}
-
-	public PurchaseHistory addPurchaseHistory(PurchaseHistory purchaseHistory) {
-		getPurchaseHistories().add(purchaseHistory);
-		purchaseHistory.setBook(this);
-
-		return purchaseHistory;
-	}
-
-	public PurchaseHistory removePurchaseHistory(PurchaseHistory purchaseHistory) {
-		getPurchaseHistories().remove(purchaseHistory);
-		purchaseHistory.setBook(null);
-
-		return purchaseHistory;
-	}
-
-	public ShoppingCartItem addShoppingCartItem(ShoppingCartItem shoppingCartItem) {
-		getShoppingCartItems().add(shoppingCartItem);
-		shoppingCartItem.setBook(this);
-
-		return shoppingCartItem;
-	}
-
-	public ShoppingCartItem removeShoppingCartItem(ShoppingCartItem shoppingCartItem) {
-		getShoppingCartItems().remove(shoppingCartItem);
-		shoppingCartItem.setBook(null);
-
-		return shoppingCartItem;
-	}
 
 	/**
 	 * @param inventoryId
@@ -108,4 +64,28 @@ public class Book implements Serializable {
 		this.bookName = bookName;
 		this.price = price;
 	}
+
+	@Override
+	public String toString() {
+		return "Book [inventoryId=" + inventoryId + ", authorName=" + authorName + ", bookCount=" + bookCount
+				+ ", bookName=" + bookName + ", price=" + price + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(authorName, bookCount, bookName, inventoryId, price);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof Book))
+			return false;
+		Book other = (Book) obj;
+		return Objects.equals(authorName, other.authorName) && bookCount == other.bookCount
+				&& Objects.equals(bookName, other.bookName) && Objects.equals(inventoryId, other.inventoryId)
+				&& Double.doubleToLongBits(price) == Double.doubleToLongBits(other.price);
+	}
+
 }

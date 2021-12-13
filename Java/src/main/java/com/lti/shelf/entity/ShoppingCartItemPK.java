@@ -10,6 +10,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * The primary key class for the shopping_cart_items database table.
@@ -20,6 +21,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 @EqualsAndHashCode
 public class ShoppingCartItemPK implements Serializable {
 	private static final long serialVersionUID = 1L;

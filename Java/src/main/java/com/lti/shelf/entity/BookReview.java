@@ -2,6 +2,7 @@ package com.lti.shelf.entity;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -32,18 +33,16 @@ public class BookReview implements Serializable {
 	private int rating;
 
 	@Column(name = "review_date")
-	private Timestamp reviewDate;
+	private Timestamp reviewDate = new Timestamp(System.currentTimeMillis());
 
 	private String reviews;
 
-	// bi-directional many-to-one association to Book
 	@ManyToOne
-	@JoinColumn(name = "inventory_id")
+	@JoinColumn(name = "inventory_id", insertable = false, updatable = false)
 	private Book book;
 
-	// bi-directional many-to-one association to CustomerLogin
 	@ManyToOne
-	@JoinColumn(name = "user_id")
+	@JoinColumn(name = "user_id", insertable = false, updatable = false)
 	private Customer customerLogin;
 
 	/**
@@ -54,14 +53,31 @@ public class BookReview implements Serializable {
 	 * @param book
 	 * @param customerLogin
 	 */
-	public BookReview(BookReviewPK id, int rating, Timestamp reviewDate, String reviews, Book book,
-			Customer customerLogin) {
+	public BookReview(BookReviewPK id, int rating, String reviews) {
 		this.id = id;
 		this.rating = rating;
-		this.reviewDate = reviewDate;
 		this.reviews = reviews;
-		this.book = book;
-		this.customerLogin = customerLogin;
+	}
+
+	@Override
+	public String toString() {
+		return "BookReview [id=" + id + ", rating=" + rating + ", reviews=" + reviews + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, rating, reviewDate, reviews);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof BookReview))
+			return false;
+		BookReview other = (BookReview) obj;
+		return Objects.equals(id, other.id) && rating == other.rating && Objects.equals(reviewDate, other.reviewDate)
+				&& Objects.equals(reviews, other.reviews);
 	}
 
 }

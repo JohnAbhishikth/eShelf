@@ -2,6 +2,7 @@ package com.lti.shelf.entity;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,36 +34,18 @@ public class Address implements Serializable {
 
 	private String city;
 
-	private String name;
-
-	private String relationship;
+	private String relationship; // self, Friend, Father, Mother, Sister, Brother
 
 	private String state;
 
 	private int zip;
 
-	// bi-directional many-to-one association to CustomerLogin
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private Customer customerLogin;
 
-	// bi-directional many-to-one association to OrderDetail
 	@OneToMany(mappedBy = "addressTbl")
 	private List<OrderDetail> orderDetails;
-
-	public OrderDetail addOrderDetail(OrderDetail orderDetail) {
-		getOrderDetails().add(orderDetail);
-		orderDetail.setAddressTbl(this);
-
-		return orderDetail;
-	}
-
-	public OrderDetail removeOrderDetail(OrderDetail orderDetail) {
-		getOrderDetails().remove(orderDetail);
-		orderDetail.setAddressTbl(null);
-
-		return orderDetail;
-	}
 
 	/**
 	 * @param addressId
@@ -72,13 +55,29 @@ public class Address implements Serializable {
 	 * @param state
 	 * @param zip
 	 */
-	public Address(String addressId, String city, String name, String relationship, String state, int zip) {
+	public Address(String addressId, String city, String relationship, String state, int zip) {
 		this.addressId = addressId;
 		this.city = city;
-		this.name = name;
 		this.relationship = relationship;
 		this.state = state;
 		this.zip = zip;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(addressId, city, relationship, state, zip);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof Address))
+			return false;
+		Address other = (Address) obj;
+		return Objects.equals(addressId, other.addressId) && Objects.equals(city, other.city)
+				&& Objects.equals(relationship, other.relationship) && Objects.equals(state, other.state)
+				&& zip == other.zip;
 	}
 
 }

@@ -2,6 +2,7 @@ package com.lti.shelf.entity;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Objects;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -20,28 +21,33 @@ import lombok.Setter;
 @Entity
 @NoArgsConstructor
 @Getter
-@Setter
+
 @Table(name = "shopping_cart_items")
 public class ShoppingCartItem implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@Getter
+	@Setter
 	@EmbeddedId
 	private ShoppingCartItemPK id;
 
-	private Timestamp date;
+	@Getter
+	private Timestamp date = new Timestamp(System.currentTimeMillis());
 
+	@Getter
+	@Setter
 	private double price;
 
+	@Getter
+	@Setter
 	private int quantity;
 
-	// bi-directional many-to-one association to Book
 	@ManyToOne
-	@JoinColumn(name = "inventory_id")
+	@JoinColumn(name = "inventory_id", insertable = false, updatable = false)
 	private Book book;
 
-	// bi-directional many-to-one association to CustomerLogin
 	@ManyToOne
-	@JoinColumn(name = "user_id")
+	@JoinColumn(name = "user_id", insertable = false, updatable = false)
 	private Customer customerLogin;
 
 	/**
@@ -50,11 +56,26 @@ public class ShoppingCartItem implements Serializable {
 	 * @param price
 	 * @param quantity
 	 */
-	public ShoppingCartItem(ShoppingCartItemPK id, Timestamp date, double price, int quantity) {
+	public ShoppingCartItem(ShoppingCartItemPK id, double price, int quantity) {
 		this.id = id;
-		this.date = date;
 		this.price = price;
 		this.quantity = quantity;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(date, id, price, quantity);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof ShoppingCartItem))
+			return false;
+		ShoppingCartItem other = (ShoppingCartItem) obj;
+		return Objects.equals(date, other.date) && Objects.equals(id, other.id)
+				&& Double.doubleToLongBits(price) == Double.doubleToLongBits(other.price) && quantity == other.quantity;
 	}
 
 }

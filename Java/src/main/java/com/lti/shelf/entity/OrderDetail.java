@@ -2,6 +2,7 @@ package com.lti.shelf.entity;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -38,25 +39,22 @@ public class OrderDetail implements Serializable {
 	@Column(name = "day_of_delivery")
 	private Timestamp dayOfDelivery;
 
-	// bi-directional many-to-one association to AddressTbl
 	@Setter
 	@Getter
 	@ManyToOne
 	@JoinColumn(name = "address_id")
 	private Address addressTbl;
 
-	// bi-directional many-to-one association to CustomerLogin
 	@Setter
 	@Getter
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private Customer customerLogin;
 
-	// bi-directional many-to-one association to PurchaseHistory
 	@Getter
 	@Setter
 	@ManyToOne
-	@JoinColumn(name = "purchase_id")
+	@JoinColumn(name = "purchase_id", insertable = false, updatable = false)
 	private PurchaseHistory purchaseHistory;
 
 	/**
@@ -68,6 +66,22 @@ public class OrderDetail implements Serializable {
 		this.id = id;
 		this.dayOfDelivery = dayOfDelivery;
 		this.addressTbl = addressTbl;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(dateOfPurchase, dayOfDelivery, id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof OrderDetail))
+			return false;
+		OrderDetail other = (OrderDetail) obj;
+		return Objects.equals(dateOfPurchase, other.dateOfPurchase)
+				&& Objects.equals(dayOfDelivery, other.dayOfDelivery) && Objects.equals(id, other.id);
 	}
 
 }
