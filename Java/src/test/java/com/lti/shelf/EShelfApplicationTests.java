@@ -115,6 +115,7 @@ class EShelfApplicationTests implements Tests {
 	@Override
 	public void deleteCustomer() {
 		// TODO Auto-generated method stub
+		
 
 	}
 
@@ -190,29 +191,85 @@ class EShelfApplicationTests implements Tests {
 
 	}
 
+
 	@Override
+	@Test
 	public void createAddress() {
-		// TODO Auto-generated method stub
-
+		Address ad = new Address();
+		Customer cust = new Customer();
+		
+		cust.setUserId("c2");
+		customerRepository.save(cust);
+		
+		
+		ad.setAddressId("a2");
+		ad.setCity("Vijayawada");
+		ad.setRelationship("Friend");
+		ad.setState("Andhra Pradesh");
+		ad.setZip(521311);
+		ad.setCustomerLogin(cust);
+		Address address = addressRepository.save(ad);
+		assertEquals(address, ad);
+		
 	}
+/*	
+	@Override
+	@Test
+	public void createAddress2() {
+		Address ad = new Address();
+		Customer cust = new Customer();
+		
+		cust.setUserId("c2");
+		customerRepository.save(cust);
+		
+		
+		ad.setAddressId("a2");
+		ad.setCity("atp");
+		ad.setRelationship("Friend");
+		ad.setState("Andhra Pradesh");
+		ad.setZip(520606);
+
+		Address address = addressRepository.save(ad);
+		assertEquals(address, ad);
+		
+	}
+*/
 
 	@Override
+	@Test
 	public void selectAddress() {
-		// TODO Auto-generated method stub
-
+		Optional<Address> findById = addressRepository.findById("a1");
+		if (findById.isPresent())
+			assertEquals(findById.get(), address);
+		else {
+			System.out.println("from else");
+			assertEquals(findById.get(), address);
+		}
 	}
+	
+	
 
 	@Override
+	@Test
 	public void updateAddress() {
-		// TODO Auto-generated method stub
-
+		Address add = addressRepository.findById("a1").get();
+		add.setCity("Guntur");
+		Address save = addressRepository.save(add);
+		assertNotEquals(address, save);
 	}
 
+	
+	
 	@Override
+	@Test
 	public void deleteAddress() {
-		// TODO Auto-generated method stub
-
+		addressRepository.deleteById("a1");
+		System.out.println();
+		assertThatExceptionOfType(NoSuchElementException.class).isThrownBy(() -> {
+			addressRepository.findById("a1").get();
+		});
 	}
+
 
 	@Override
 	@Test
@@ -251,34 +308,56 @@ class EShelfApplicationTests implements Tests {
 	@Override
 	@Test
 	public void deletePurchaseHistory() {
-		purchaseHistoryRepository.deleteById("p123");
+		purchaseHistoryRepository.deleteById("ph1");
 		assertThatExceptionOfType(NoSuchElementException.class).isThrownBy(() -> {
-			purchaseHistoryRepository.findById("p123").get();
+			purchaseHistoryRepository.findById("ph1").get();
 		});
 	}
 
 	@Override
+	@Test
 	public void createShoppingCartItem() {
-		// TODO Auto-generated method stub
+	
+		ShoppingCartItem sc = new ShoppingCartItem();
+		
+		sc.setId(shoppingCartItemPK);
+		sc.setPrice(200);
+		sc.setQuantity(10);
+		
+		ShoppingCartItem cartitem= shoppingCartItemRepository.save(sc);
+		
+		assertEquals(cartitem, sc);	
 
 	}
 
 	@Override
+	@Test
 	public void selectShoppingCartItem() {
-		// TODO Auto-generated method stub
-
+		Optional<ShoppingCartItem> findById = shoppingCartItemRepository.findById(shoppingCartItemPK);
+		if (findById.isPresent())
+			assertEquals(findById.get(),  shoppingCartItem);
+		else {
+			System.out.println("from else");
+			assertEquals(findById.get(),  shoppingCartItem);
+		}
 	}
-
+	
+	
 	@Override
+	@Test
 	public void updateShoppingCartItem() {
-		// TODO Auto-generated method stub
-
-	}
+		ShoppingCartItem scitem = shoppingCartItemRepository.findById(shoppingCartItemPK).get();
+		scitem.setPrice(200);
+		ShoppingCartItem save = shoppingCartItemRepository.save(scitem);
+		assertNotEquals( shoppingCartItem, save);
+		}
 
 	@Override
+	@Test
 	public void deleteShoppingCartItem() {
-		// TODO Auto-generated method stub
-
+		shoppingCartItemRepository.deleteById(shoppingCartItemPK); 
+		assertThatExceptionOfType(NoSuchElementException.class).isThrownBy(() -> {
+			shoppingCartItemRepository.findById(shoppingCartItemPK).get();
+		});
 	}
-
 }
