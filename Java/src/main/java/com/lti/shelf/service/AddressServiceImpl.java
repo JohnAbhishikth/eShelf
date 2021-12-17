@@ -44,7 +44,6 @@ public class AddressServiceImpl implements AddressService {
 
 	@Override
 	public Address searchCustomerByCustId(Address address) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

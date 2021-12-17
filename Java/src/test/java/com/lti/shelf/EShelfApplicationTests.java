@@ -212,28 +212,6 @@ class EShelfApplicationTests implements Tests {
 		assertEquals(address, ad);
 		
 	}
-/*	
-	@Override
-	@Test
-	public void createAddress2() {
-		Address ad = new Address();
-		Customer cust = new Customer();
-		
-		cust.setUserId("c2");
-		customerRepository.save(cust);
-		
-		
-		ad.setAddressId("a2");
-		ad.setCity("atp");
-		ad.setRelationship("Friend");
-		ad.setState("Andhra Pradesh");
-		ad.setZip(520606);
-
-		Address address = addressRepository.save(ad);
-		assertEquals(address, ad);
-		
-	}
-*/
 
 	@Override
 	@Test
