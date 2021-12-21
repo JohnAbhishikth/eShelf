@@ -39,6 +39,9 @@ public class Book implements Serializable {
 	@Column(name = "book_name")
 	private String bookName;
 
+	@Column(name = "category")
+	private String bookCategory;
+
 	private double price;
 
 	@OneToMany(mappedBy = "book")
@@ -57,7 +60,9 @@ public class Book implements Serializable {
 	 * @param bookName
 	 * @param price
 	 */
-	public Book(String inventoryId, String authorName, int bookCount, String bookName, double price) {
+	public Book(String inventoryId, String authorName, String bookCategory, int bookCount, String bookName,
+			double price) {
+		this.bookCategory = bookCategory;
 		this.inventoryId = inventoryId;
 		this.authorName = authorName;
 		this.bookCount = bookCount;
@@ -68,7 +73,7 @@ public class Book implements Serializable {
 	@Override
 	public String toString() {
 		return "Book [inventoryId=" + inventoryId + ", authorName=" + authorName + ", bookCount=" + bookCount
-				+ ", bookName=" + bookName + ", price=" + price + "]";
+				+ ", bookName=" + bookName + ", bookCategory=" + bookCategory + ", price=" + price + "]";
 	}
 
 	@Override
@@ -87,5 +92,4 @@ public class Book implements Serializable {
 				&& Objects.equals(bookName, other.bookName) && Objects.equals(inventoryId, other.inventoryId)
 				&& Double.doubleToLongBits(price) == Double.doubleToLongBits(other.price);
 	}
-
 }

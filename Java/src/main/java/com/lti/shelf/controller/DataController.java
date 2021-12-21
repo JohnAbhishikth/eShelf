@@ -28,7 +28,7 @@ import com.lti.shelf.repository.ShoppingCartItemRepository;
 
 @Controller
 @CrossOrigin
-public class TestController {
+public class DataController {
 
 	@Autowired
 	CustomerRepository customerRepository;
@@ -56,10 +56,10 @@ public class TestController {
 	ShoppingCartItem shoppingCartItem;
 	ShoppingCartItemPK shoppingCartItemPK;
 
-	@GetMapping("/test")
+	@GetMapping("/data")
 	@ResponseBody
-	public String test() {
-		book = new Book("b1", "Test Author", 15, "Test BookName", 112.52);
+	public String loadTestData() {
+		book = new Book("b1", "Test Author", "Technology", 15, "Test BookName", 112.52);
 		bookRepository.save(book);
 
 		address = new Address("a1", "Vizag", "Self", "AP", 530217);
