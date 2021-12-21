@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.lti.shelf.entity.Address;
-import com.lti.shelf.repo.AddressRepo;
 import com.lti.shelf.repository.AddressRepository;
 
 
