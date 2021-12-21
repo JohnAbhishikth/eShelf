@@ -27,6 +27,7 @@ package com.lti.shelf;
 public interface Tests {
 
 	void createCustomer();
+	void createCustomer2();
 	void selectCustomer();
 	void updateCustomer();
 	void deleteCustomer();

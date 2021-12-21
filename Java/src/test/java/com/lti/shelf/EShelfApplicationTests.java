@@ -95,103 +95,201 @@ class EShelfApplicationTests implements Tests {
 	}
 
 	@Override
+	@Test
 	public void createCustomer() {
-		// TODO Auto-generated method stub
-
+		Customer customer = new Customer();
+		customer.setUserId("c2");
+		customer.setEmail("abcd@gmail.com");
+		customer.setName("Ram");
+		customer.setPassword("paSSword");
+		customer.setPhoneNumber("123456");
+		Customer save = customerRepository.save(customer);
+		assertEquals(save, customer);
+	}
+	
+	@Override
+	@Test
+	public void createCustomer2() {
+		Customer customer2 = new Customer();
+		customer2.setUserId("c3");
+		customer2.setEmail("dghjk@gmail.com");
+		customer2.setName("Syam");
+		customer2.setPassword("pASSword");
+		customer2.setPhoneNumber("403456");
+		Customer save = customerRepository.save(customer2);
+		assertEquals(save, customer2);
 	}
 
 	@Override
+	@Test
 	public void selectCustomer() {
-		// TODO Auto-generated method stub
+		 Optional<Customer> findById = customerRepository.findById("c1");
+		 if (findById.isPresent())
+				assertEquals(findById.get(), customer);
+		 else {
+			 System.out.println("from else");
+			 assertEquals(findById.get(), customer);
+		 }
 
 	}
 
 	@Override
+	@Test
 	public void updateCustomer() {
-		// TODO Auto-generated method stub
+		 Customer cust = customerRepository.findById("c1").get();
+		 cust.setPhoneNumber("908654");
+		 Customer save = customerRepository.save(cust);
+		 assertNotEquals(customer, save);
 
 	}
 
-	@Override
-	public void deleteCustomer() {
-		// TODO Auto-generated method stub
-		
-
+ 
+	@Override 
+	@Test
+	public void deleteCustomer() { 
+		customerRepository.deleteById("c1");
+		assertThatExceptionOfType(NoSuchElementException.class).isThrownBy(() -> {
+		customerRepository.findById("c1").get();
+	    });  
+ 
 	}
 
+
 	@Override
+	@Test
 	public void createBook() {
 		// TODO Auto-generated method stub
-
+		Book book= new Book();
+		book.setInventoryId("b2");
+		book.setAuthorName("Chetan Bhagat");
+		book.setBookCount(10);
+		book.setBookName("400 Days");
+		book.setPrice(156);
+		Book bk = bookRepository.save(book);
+		assertEquals(bk, book);
 	}
 
 	@Override
+	@Test
 	public void selectBook() {
 		// TODO Auto-generated method stub
-
+		Optional<Book> findById = bookRepository.findById("b2");
+		if (findById.isPresent())
+			assertEquals(findById.get(), book);
 	}
 
+	// NOT WORKING FOR NEW Value
 	@Override
+	@Test
 	public void updateBook() {
 		// TODO Auto-generated method stub
-
+//		Book book1 = bookRepository.findById("b1").get();
+		Book book1 = bookRepository.findById("b1").get();
+		System.out.println(book1.getAuthorName());
+		book1.setBookName("The 3 mistakes of my life");
+		book1.setPrice(200);
+		Book save = bookRepository.save(book1);
+		assertNotEquals(book, save);
 	}
 
 	@Override
+	@Test
 	public void deleteBook() {
 		// TODO Auto-generated method stub
-
+		bookRepository.deleteById("b2");
+		assertThatExceptionOfType(NoSuchElementException.class).isThrownBy(() -> {
+			bookRepository.findById("b2").get();
+		});
 	}
 
 	@Override
+	@Test
 	public void createBookReview() {
 		// TODO Auto-generated method stub
-
+		BookReview br= new BookReview();
+		BookReviewPK bpk = new BookReviewPK(book.getInventoryId(), customer.getUserId());
+		br.setId(bpk);
+		br.setRating(4);
+		br.setReviews("Interesting Book");
+		BookReview bk = bookReviewRepository.save(br);
+		assertEquals(bk, br);
 	}
 
 	@Override
+	@Test
 	public void selectBookReview() {
 		// TODO Auto-generated method stub
-
+		BookReview br= new BookReview();
+		BookReviewPK bpk = new BookReviewPK(book.getInventoryId(), customer.getUserId());
+		Optional<BookReview> findById = bookReviewRepository.findById(bpk);
+		if (findById.isPresent())
+			assertEquals(findById.get(), bookReview);
 	}
 
 	@Override
+	@Test
 	public void updateBookReview() {
 		// TODO Auto-generated method stub
-
+		BookReviewPK bpk = new BookReviewPK(book.getInventoryId(), customer.getUserId());
+		BookReview br= bookReviewRepository.findById(bpk).get();
+		br.setRating(5);
+		BookReview save = bookReviewRepository.save(br);
+		assertEquals(br, save);
 	}
+	
 
 	@Override
+	@Test
 	public void deleteBookReview() {
 		// TODO Auto-generated method stub
-
+		BookReviewPK bpk = new BookReviewPK(book.getInventoryId(), customer.getUserId());
+		bookReviewRepository.deleteById(bpk);
+		assertThatExceptionOfType(NoSuchElementException.class).isThrownBy(() -> {
+			bookReviewRepository.findById(bpk).get();
+		});
 	}
 
+
+
 	@Override
+	@Test
 	public void createOrderDetails() {
-		// TODO Auto-generated method stub
+		OrderDetail orderDetail = new OrderDetail();
+		orderDetail.setId(orderDetailPK);
+		orderDetail.setAddressTbl(address);
+		orderDetail.setCustomerLogin(customer);
+		OrderDetail order = orderDetailRepository.save(orderDetail);
+		assertEquals(order, orderDetail);
 
 	}
 
 	@Override
+	@Test
 	public void selectOrderDetails() {
-		// TODO Auto-generated method stub
+		 Optional<OrderDetail> findById = orderDetailRepository.findById(orderDetailPK);
+		 if (findById.isPresent())
+				assertEquals(findById.get(), orderDetail);
+		 
 
 	}
 
 	@Override
+	@Test
 	public void updateOrderDetails() {
-		// TODO Auto-generated method stub
-
+		OrderDetailPK orderDetailPK = new OrderDetailPK("o1",purchaseHistory.getPurchaseId());
+		orderDetail.setAddressTbl(address);
+		OrderDetail save = orderDetailRepository.save(orderDetail);
+		assertEquals(orderDetail, save);
 	}
 
 	@Override
+	@Test
 	public void deleteOrderDetails() {
-		// TODO Auto-generated method stub
-
+		orderDetailRepository.deleteById(orderDetailPK);
+		assertThatExceptionOfType(NoSuchElementException.class).isThrownBy(() -> {
+		orderDetailRepository.findById(orderDetailPK).get();
+	    });
 	}
-
-
 	@Override
 	@Test
 	public void createAddress() {
