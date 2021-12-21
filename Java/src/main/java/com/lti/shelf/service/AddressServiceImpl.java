@@ -21,7 +21,14 @@ public class AddressServiceImpl implements AddressService {
 	
 	@Override
 	public void addAddress(Address address) {
-		jpaRepo.save(address);
+		if(address!=null) 
+		{
+			try {	
+				jpaRepo.save(address);	
+			}catch(Exception e) {
+				System.out.print(e);
+			}
+		}	
 	}
 
 	@Override
@@ -31,7 +38,14 @@ public class AddressServiceImpl implements AddressService {
 
 	@Override
 	public boolean updateAddress(Address address) {
-		jpaRepo.save(address);
+		if(address!=null) 
+		{
+			try {	
+				jpaRepo.save(address);	
+			}catch(Exception e) {
+				System.out.print(e);
+			}
+		}
 		return true;
 	}
 

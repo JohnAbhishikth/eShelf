@@ -22,7 +22,14 @@ public class ShoppingCartItemServiceImpl implements ShoppingCartItemService {
 	
 	@Override
 	public void addShoppingCI(ShoppingCartItem sci) {
-		jpaRepo.save(sci);
+		if(sci!=null) 
+		{
+			try {	
+				jpaRepo.save(sci);	
+			}catch(Exception e) {
+				System.out.print(e);
+			}
+		}
 		
 	}
 
@@ -33,7 +40,14 @@ public class ShoppingCartItemServiceImpl implements ShoppingCartItemService {
 
 	@Override
 	public boolean updateShoppingCI(ShoppingCartItem sci) {
-		jpaRepo.save(sci);
+		if(sci!=null) 
+		{
+			try {	
+				jpaRepo.save(sci);	
+			}catch(Exception e) {
+				System.out.print(e);
+			}
+		}
 		return true;
 	}
 
