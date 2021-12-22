@@ -50,13 +50,21 @@ public class AddressServiceImpl implements AddressService {
 	}
 
 	@Override
-	public boolean deleteAddress(Address address) {
-		jpaRepo.delete(address);
+	public boolean deleteAddress(String addId) {
+		Address add = new Address();		
+		add.getCustomerLogin();
+		add.setAddressId(addId);
+		jpaRepo.delete(add);
 		return true;
 	}
 
 	@Override
-	public Address searchCustomerByCustId(Address address) {
+	public Address searchCustomerByCustId(String addId) {
+		Address add = new Address();		
+		add.getCustomerLogin();
+		add.getAddressId();
+		
+		jpaRepo.findById(addId);
 		return null;
 	}
 

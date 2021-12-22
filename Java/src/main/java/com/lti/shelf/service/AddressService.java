@@ -11,7 +11,7 @@ public interface AddressService {
 	public List<Address> getAddress();
 	
 	public boolean updateAddress(Address address);
-	public boolean deleteAddress(Address address);
+	public boolean deleteAddress(String addId);
 
-	public Address searchCustomerByCustId(Address address);
+	public Address searchCustomerByCustId(String addId);
 }
