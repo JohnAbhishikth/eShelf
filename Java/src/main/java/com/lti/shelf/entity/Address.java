@@ -80,4 +80,10 @@ public class Address implements Serializable {
 				&& zip == other.zip;
 	}
 
+	@Override
+	public String toString() {
+		return "Address [addressId=" + addressId + ", city=" + city + ", relationship=" + relationship + ", state="
+				+ state + ", zip=" + zip + "]";
+	}
+
 }

@@ -8,6 +8,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class AddressDTO {
+	private String userId;
 	private String addressId;
 	private String city;
 	private String relationship; // self, Friend, Father, Mother, Sister, Brother
