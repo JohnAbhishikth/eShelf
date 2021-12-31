@@ -5,7 +5,7 @@ import java.util.List;
 import com.lti.shelf.dto.BookDTO;
 import com.lti.shelf.exception.EShelfException;
 
-interface BookService {
+public interface BookService {
 	void addBook(BookDTO bookDto) throws EShelfException;
 	List<BookDTO> getAllBooks() throws EShelfException;
 	boolean updateBook(BookDTO bookDto) throws EShelfException;
