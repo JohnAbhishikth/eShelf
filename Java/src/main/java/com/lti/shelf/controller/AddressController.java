@@ -38,29 +38,29 @@ public class AddressController {
 		return "address added Successfully";
 	}
 
-	@PutMapping("/update/{userId}")
+	@PutMapping("/update")
 	@ResponseBody
-	public String updateAddress(@RequestBody AddressDTO addressDTO, @PathVariable String userId ) {
+	public String updateAddress(@RequestBody AddressDTO addressDTO) {
 		try {
-			addressService.updateAddress(addressDTO,userId);
+			addressService.updateAddress(addressDTO);
 		} catch (EShelfException e) {
 			return e.getMessage();
 		}
 		return "updated Successfully";
 	}
 
-	@DeleteMapping("/delete/{userId}/{addressId}")
+	@DeleteMapping("/delete")
 	@ResponseBody
-	public String deleteAddress(@PathVariable String addressId, @PathVariable String userId ) {
+	public String deleteAddress(@RequestBody AddressDTO addressDTO) {
 		try {
-			addressService.deleteAddress(addressId,userId);
+			addressService.deleteAddress(addressDTO.getAddressId(), addressDTO.getUserId());
 
 		} catch (EShelfException e) {
 			return e.getMessage();
 		}
 		return "Deleted Successfully";
 	}
-	
+
 	@GetMapping("/get/{userId}")
 	public List<AddressDTO> getAddressById(@PathVariable String userId) throws EShelfException {
 
@@ -68,7 +68,7 @@ public class AddressController {
 
 		return addressList;
 	}
-	
+
 	@GetMapping("/get/customer/{addressId}")
 	public CustomerDTO getCustomerById(@PathVariable String addressId) throws EShelfException {
 
@@ -76,6 +76,5 @@ public class AddressController {
 
 		return customer;
 	}
-	
 
 }

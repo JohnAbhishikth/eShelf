@@ -65,7 +65,7 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public CustomerDTO getCustomerById(String userId) throws EShelfException {
 		Optional<Customer> findByID = customerRepo.findById(userId);
-		if (findByID.isEmpty())
+		if (!findByID.isPresent())
 			throw new EShelfException("Can not find Customer");
 		Customer customer = findByID.get();
 		CustomerDTO dto = new CustomerDTO();

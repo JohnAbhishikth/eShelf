@@ -23,7 +23,7 @@ public class AddressServiceImpl implements AddressService {
 
 	@Autowired
 	AddressRepository addressRepository;
-	
+
 	@Autowired
 	CustomerRepository customerRepository;
 
@@ -36,13 +36,15 @@ public class AddressServiceImpl implements AddressService {
 				throw new EShelfException("Address is already available");
 
 			Optional<Customer> customer = customerRepository.findById(addressDto.getUserId());
-			if(!customer.isPresent()) {
+			if (!customer.isPresent()) {
 				throw new EShelfException("user not present");
 			}
-			// Address address = new Address(addressDto.getAddressId(), addressDto.getRelationship(), addressDto.getCity(), addressDto.getState(), addressDto.getZip());
+			// Address address = new Address(addressDto.getAddressId(),
+			// addressDto.getRelationship(), addressDto.getCity(), addressDto.getState(),
+			// addressDto.getZip());
 
 			Address address = new Address();
-			
+
 			try {
 				address.setAddressId(addressDto.getAddressId());
 				address.setRelationship(addressDto.getRelationship());
@@ -65,9 +67,9 @@ public class AddressServiceImpl implements AddressService {
 			List<Address> findAllById = addressRepository.findAllByUserId(userId);
 
 			List<AddressDTO> addressDTOList = new ArrayList<>();
-			
+
 			try {
-				for(Address address:findAllById) {
+				for (Address address : findAllById) {
 					AddressDTO addressDto = new AddressDTO();
 					addressDto.setAddressId(address.getAddressId());
 					addressDto.setRelationship(address.getRelationship());
@@ -77,45 +79,44 @@ public class AddressServiceImpl implements AddressService {
 					addressDto.setUserId(userId);
 					addressDTOList.add(addressDto);
 				}
-			}catch(Exception e) {
+			} catch (Exception e) {
 				throw new EShelfException("No Details");
 			}
 			return addressDTOList;
-		}
-		else {
-			throw new EShelfException("user id cant be null");	
+		} else {
+			throw new EShelfException("user id cant be null");
 		}
 	}
-		
 
 	@Override
-	public boolean updateAddress(AddressDTO addressDto, String userId) throws EShelfException {
+	public boolean updateAddress(AddressDTO addressDto) throws EShelfException {
 		if (addressDto != null) {
-			Optional<Customer> customer = customerRepository.findById(userId);
-			if(!customer.isPresent()) {
+			Optional<Customer> custOptional = customerRepository.findById(addressDto.getUserId());
+			if (!custOptional.isPresent()) {
 				throw new EShelfException("user not present");
 			}
 			
-			Optional<Address> findByUserId = addressRepository.findById(addressDto.getAddressId());
-			if (!findByUserId.isPresent()) {
+			Optional<Address> addressOptional = addressRepository.findById(addressDto.getAddressId());
+			if (!addressOptional.isPresent()) {
 				throw new EShelfException("address is not present");
-			}else {
-				
-				Address address = new Address();
-				try {
-					address.setAddressId(addressDto.getAddressId());
-					address.setRelationship(addressDto.getRelationship());
-					address.setCity(addressDto.getCity());
-					address.setState(addressDto.getState());
-					address.setZip(addressDto.getZip());
-					address.setCustomerLogin(customer.get());
-					
-					addressRepository.save(address);
-				} catch (Exception e) {
-					throw new EShelfException("Invalid Address");
+			} else {
+				Address address = addressOptional.get();
+				if (address.getCustomerLogin().getUserId().equals(addressDto.getUserId())) {
+					try {
+						address.setAddressId(addressDto.getAddressId());
+						address.setRelationship(addressDto.getRelationship());
+						address.setCity(addressDto.getCity());
+						address.setState(addressDto.getState());
+						address.setZip(addressDto.getZip());
+						addressRepository.save(address);
+					} catch (Exception e) {
+						throw new EShelfException("Invalid Address");
+					}	
+				}else {
+					throw new EShelfException("Cutomer and Address don't match");
 				}
-			}	
-		}else {
+			}
+		} else {
 			throw new EShelfException("user id cannot be null");
 		}
 		return true;
@@ -123,56 +124,60 @@ public class AddressServiceImpl implements AddressService {
 
 	@Override
 	public boolean deleteAddress(String addressId, String userId) throws EShelfException {
-		if(addressId != null) {
-			Optional<Customer> customer = customerRepository.findById(userId);
-			if(!customer.isPresent()) {
+		if (addressId != null && userId != null) {
+			Optional<Customer> customerOptional = customerRepository.findById(userId);
+			if (!customerOptional.isPresent()) {
 				throw new EShelfException("user not present");
 			}
+			Customer cust = customerOptional.get();
 			
-			Optional<Address> findById = addressRepository.findById(addressId); 
-			if (findById.isPresent()) {
-				Address address = new Address();
-				try {
+			Optional<Address> addressOptional = addressRepository.findById(addressId);
+			if(!addressOptional.isPresent()) {
+				throw new EShelfException("Address is Not registered");
+			}
+			Address address = addressOptional.get();
+			if (addressOptional.isPresent() && address.getCustomerLogin().getUserId().equals(userId) ) {	
+				try { 
+					address.setCustomerLogin(cust);
 					address.setAddressId(addressId);
-					
+
 					addressRepository.delete(address);
 				} catch (Exception e) {
-					throw new EShelfException("Invalid Address");
-					}
-				}else {
-					throw new EShelfException("address is not present");
+					throw new EShelfException("Invalid details");
 				}
-			}else {
-				throw new EShelfException("addressID not be Null");
+			} else {
+				throw new EShelfException("Address is not present");
 			}
+		} else {
+			throw new EShelfException("addressID or userID not be Null");
+		}
 		return true;
 	}
 
 	@Override
 	public CustomerDTO searchCustomerByAddressId(String addressId) throws EShelfException {
-		
+
 		if (addressId != null) {
 			CustomerDTO customerDto = new CustomerDTO();
-			
+
 			Optional<Address> findAddress = addressRepository.findById(addressId);
-			
 			Address address = findAddress.get();
 			String userId = address.getCustomerLogin().getUserId();
-			
+
 			Optional<Customer> findCustomer = customerRepository.findById(userId);
 			Customer customer = findCustomer.get();
-			
+
 			try {
 				customerDto.setUserId(customer.getUserId());
 				customerDto.setName(customer.getName());
 				customerDto.setEmail(customer.getEmail());
 				customerDto.setPhoneNumber(customer.getPhoneNumber());
-			}catch(Exception e) {
+			} catch (Exception e) {
 				throw new EShelfException("No Customer is present");
-			}	
+			}
 			return customerDto;
-		}else {
-			throw new EShelfException("user id cant be null");	
+		} else {
+			throw new EShelfException("user id cant be null");
 		}
 	}
 }
