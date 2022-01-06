@@ -19,7 +19,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public void registerCustomer(CustomerDTO customerDto) throws EShelfException {
-		if (customerDto != null && customerDto.getUserId()!=null) {
+		if (customerDto != null && customerDto.getUserId() != null) {
 			Optional<Customer> findByID = customerRepo.findById(customerDto.getUserId());
 			if (findByID.isPresent())
 				throw new EShelfException("Customer already Exist");
@@ -42,19 +42,23 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public void updateCustomer(CustomerDTO customerDto) throws EShelfException {
 		if (customerDto != null) {
-			Customer customer = new Customer();
+			Optional<Customer> cust = customerRepo.findById(customerDto.getUserId());
+			if (!cust.isPresent())
+				throw new EShelfException("Invalid Customer");
 			try {
+				Customer customer = cust.get();
 				customer.setUserId(customerDto.getUserId());
 				customer.setName(customerDto.getName());
 				customer.setEmail(customerDto.getEmail());
 				customer.setPhoneNumber(customerDto.getPhoneNumber());
 				customer.setPassword(customerDto.getPassword());
 				customerRepo.save(customer);
+				System.out.println("Update Successful");
 			} catch (Exception e) {
 				throw new EShelfException("Invalid Customer");
 			}
 		} else {
-			System.out.println("Enter valid Customer");
+			System.out.println("Invalid Customer");
 		}
 	}
 
@@ -73,14 +77,23 @@ public class CustomerServiceImpl implements CustomerService {
 		return dto;
 	}
 
-	@Override    //Test me
+	@Override
 	public CustomerDTO loginCustomer(LoginDTO loginDTO) throws EShelfException {
 		Optional<Customer> customer = customerRepo.findById(loginDTO.getLoginId());
 		if (!customer.isPresent())
 			throw new EShelfException("Invalid UserId");
-		Optional<Customer> customerPassword = customerRepo.findById(loginDTO.getPassword());
-		if (!customerPassword.equals(loginDTO.getPassword()))
+		Customer cust = customer.get();
+		String password = cust.getPassword();
+		if (password.equals(loginDTO.getPassword())) {
+			CustomerDTO dto = new CustomerDTO();
+			dto.setName(cust.getName());
+			dto.setEmail(cust.getEmail());
+			dto.setPhoneNumber(cust.getPhoneNumber());
+			dto.setUserId(cust.getUserId());
+			return dto;
+		} else {
 			throw new EShelfException("Invalid Password");
-		return null;
+		}
+
 	}
 }

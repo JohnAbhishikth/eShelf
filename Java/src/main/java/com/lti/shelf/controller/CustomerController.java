@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.ObjectIdGenerators.StringIdGenerator;
 import com.lti.shelf.dto.CustomerDTO;
@@ -18,7 +19,7 @@ import com.lti.shelf.dto.LoginDTO;
 import com.lti.shelf.exception.EShelfException;
 import com.lti.shelf.service.CustomerService;
 
-@Controller
+@RestController
 @CrossOrigin
 @RequestMapping("/customer")
 public class CustomerController {
@@ -50,6 +51,16 @@ public class CustomerController {
 		} catch (EShelfException e) {
 			return e.getMessage();
 		}
+	}
+	@PostMapping("/login")
+	public CustomerDTO loginCustomer(@RequestBody LoginDTO loginDto) throws EShelfException {
+		try {
+			CustomerDTO dto = customerService.loginCustomer(loginDto);
+			return dto;
+		} catch (EShelfException e) {
+			throw e;
+		}
+		 
 	}
 	
 }
