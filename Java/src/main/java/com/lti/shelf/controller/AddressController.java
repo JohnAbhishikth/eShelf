@@ -32,7 +32,6 @@ public class AddressController {
 	public String addAddress(@RequestBody AddressDTO addressDTO) {
 		try {
 			addressService.addAddress(addressDTO);
-
 		} catch (EShelfException e) {
 			return e.getMessage();
 		}
@@ -44,7 +43,6 @@ public class AddressController {
 	public String updateAddress(@RequestBody AddressDTO addressDTO, @PathVariable String userId ) {
 		try {
 			addressService.updateAddress(addressDTO,userId);
-
 		} catch (EShelfException e) {
 			return e.getMessage();
 		}
