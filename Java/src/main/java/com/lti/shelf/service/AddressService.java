@@ -11,7 +11,7 @@ public interface AddressService {
 
 	void addAddress(AddressDTO addressDto) throws EShelfException;
 	List<AddressDTO> getAddressByUserId(String userId) throws EShelfException;
-	boolean updateAddress(AddressDTO addressDto, String userId) throws EShelfException;
+	boolean updateAddress(AddressDTO addressDto) throws EShelfException;
 	boolean deleteAddress(String addressId, String userId) throws EShelfException;
 	CustomerDTO searchCustomerByAddressId(String addressId) throws EShelfException;
 

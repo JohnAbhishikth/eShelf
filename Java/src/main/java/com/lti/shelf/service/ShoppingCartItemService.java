@@ -5,7 +5,7 @@ import java.util.List;
 import com.lti.shelf.dto.ShoppingCartDTO;
 import com.lti.shelf.exception.EShelfException;
 
-interface ShoppingCartItemService {
+public interface ShoppingCartItemService {
 	void addItemToCart(ShoppingCartDTO shoppingCartDto) throws EShelfException;
 	List<ShoppingCartDTO> getCartByUserId(String userId) throws EShelfException;
 	boolean updateShoppingCart(ShoppingCartDTO shoppingCartDto) throws EShelfException;

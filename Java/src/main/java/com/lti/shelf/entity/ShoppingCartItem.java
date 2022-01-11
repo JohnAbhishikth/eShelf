@@ -21,7 +21,6 @@ import lombok.Setter;
 @Entity
 @NoArgsConstructor
 @Getter
-
 @Table(name = "shopping_cart_items")
 public class ShoppingCartItem implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -29,6 +28,7 @@ public class ShoppingCartItem implements Serializable {
 	@Getter
 	@Setter
 	@EmbeddedId
+//	Composite Pritmary Key
 	private ShoppingCartItemPK id;
 
 	@Getter
