@@ -48,8 +48,7 @@ public class BookController {
 	}
 	
 	@GetMapping("/getall")
-	public List<BookDTO> getAllBooks() throws EShelfException{
-		
+	public List<BookDTO> getAllBooks() throws EShelfException{	
 		 List<BookDTO> list = bookService.getAllBooks();
 		 return list;
 	}
@@ -57,26 +56,49 @@ public class BookController {
 	@GetMapping("/getbyid/{id}")
 	@ResponseBody
 	public BookDTO getBookById(@PathVariable String id) throws EShelfException{
-		return bookService.searchBookById(id);
+		try {
+			BookDTO dto = bookService.searchBookById(id);
+			return dto;
+		}
+		catch(Exception e) {
+			throw e;
+		}
 	}
 	
 	@GetMapping("/deletebyid/{id}")
 	@ResponseBody
 	public String deleteBook(@PathVariable String id) throws EShelfException{
-	 bookService.deleteBook(id);
-	return "Book Deleted Successfully!!!";
+	 try {
+		 bookService.deleteBook(id);
+			return "Book Deleted Successfully!!!";
+	 }
+	 catch(Exception e){
+		 return e.getMessage();
+	 }
 	}
 	
 	@GetMapping("/getbyauthor/{author}")
 	@ResponseBody
 	public List<BookDTO> searchBookByAuthor(@PathVariable String author) throws EShelfException{
-		return bookService.searchBookByAuthor(author);
+		try {
+			List<BookDTO> dto = bookService.searchBookByAuthor(author);
+			return dto;
+		}
+		catch(Exception e) {
+			throw e;
+		}
 	}
 	
 	@GetMapping("/getbycategory/{category}")
 	@ResponseBody
 	public List<BookDTO> searchBookByCategory(@PathVariable String category) throws EShelfException{
-		return bookService.searchBookByCategory(category);
+		try {
+			List<BookDTO> dto = bookService.searchBookByCategory(category);
+			return dto;
+		}
+		catch(Exception e) {
+			throw e;
+		}
 	}
 }
 
