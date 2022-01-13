@@ -9,10 +9,11 @@ import com.lti.shelf.entity.BookReview;
 import com.lti.shelf.entity.BookReviewPK;
 
 public interface BookReviewRepository extends JpaRepository<BookReview, BookReviewPK> {
-	
+
 	@Query(value = "select * from book_review where inventory_id=?1", nativeQuery = true)
 	List<BookReview> findAllByBookId(String inventoryId);
 
-	List<BookReview> findAllByUserId(String userId);
+	@Query(value = "select * from book_review where user_id=?1", nativeQuery = true)
+	List<BookReview> getAllUserReviews(String userId);
 
 }
