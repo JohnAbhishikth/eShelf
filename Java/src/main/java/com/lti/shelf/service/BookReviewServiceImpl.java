@@ -25,12 +25,9 @@ public class BookReviewServiceImpl implements BookReviewService {
 				throw new EShelfException("Empty Review");
 			}
 			BookReviewPK bookPK = new BookReviewPK(bookReviewDto.getInventoryId(), bookReviewDto.getUserId());
-			System.out.println("1");
 			BookReview bookReview = new BookReview(bookPK, bookReviewDto.getRating(), bookReviewDto.getReviews());
-			System.out.println("2");
 			System.out.println(bookReview);
 			bookReviewRepository.save(bookReview);
-			System.out.println("3");
 		} catch (Exception e) {
 			throw new EShelfException("Unable to add Review");
 		}
