@@ -13,7 +13,7 @@ public interface BookReviewRepository extends JpaRepository<BookReview, BookRevi
 	@Query(value = "select * from book_review where inventory_id=?1", nativeQuery = true)
 	List<BookReview> findAllByBookId(String inventoryId);
 
-	@Query(value = "select * from book_review where user_id=?1", nativeQuery = true)
-	List<BookReview> getAllUserReviews(String userId);
+	@Query(value = "select * from BOOK_REVIEW where user_Id=?1", nativeQuery = true)
+	List<BookReview> getAllReviewsUserId(String userId);
 
 }

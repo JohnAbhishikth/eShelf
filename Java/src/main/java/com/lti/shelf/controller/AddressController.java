@@ -3,7 +3,6 @@ package com.lti.shelf.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,12 +28,8 @@ public class AddressController {
 
 	@PostMapping("/add")
 	@ResponseBody
-	public String addAddress(@RequestBody AddressDTO addressDTO) {
-		try {
-			addressService.addAddress(addressDTO);
-		} catch (EShelfException e) {
-			return e.getMessage();
-		}
+	public String addAddress(@RequestBody AddressDTO addressDTO) throws EShelfException {
+		addressService.addAddress(addressDTO);
 		return "address added Successfully";
 	}
 
@@ -54,7 +49,6 @@ public class AddressController {
 	public String deleteAddress(@RequestBody AddressDTO addressDTO) {
 		try {
 			addressService.deleteAddress(addressDTO.getAddressId(), addressDTO.getUserId());
-
 		} catch (EShelfException e) {
 			return e.getMessage();
 		}
@@ -63,18 +57,12 @@ public class AddressController {
 
 	@GetMapping("/get/{userId}")
 	public List<AddressDTO> getAddressById(@PathVariable String userId) throws EShelfException {
-
-		List<AddressDTO> addressList = addressService.getAddressByUserId(userId);
-
-		return addressList;
+		return addressService.getAddressByUserId(userId);
 	}
 
 	@GetMapping("/get/customer/{addressId}")
 	public CustomerDTO getCustomerById(@PathVariable String addressId) throws EShelfException {
-
-		CustomerDTO customer = addressService.searchCustomerByAddressId(addressId);
-
-		return customer;
+		return addressService.searchCustomerByAddressId(addressId);
 	}
 
 }

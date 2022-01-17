@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lti.shelf.dto.BookReviewDTO;
-import com.lti.shelf.dto.ShoppingCartDTO;
 import com.lti.shelf.exception.EShelfException;
 import com.lti.shelf.service.BookReviewService;
 
@@ -47,14 +46,13 @@ public class BookReviewController {
 
 	@GetMapping("/bookid/{inventoryId}")
 	public List<BookReviewDTO> getAllReviews(@PathVariable String inventoryId) throws EShelfException {
-
 		return bookreviewService.getAllBookReviewsByBookId(inventoryId);
 	}
 
-	@GetMapping("/userid/{userId}")
-	public List<BookReviewDTO> showReview(@PathVariable String userId) throws EShelfException {
-		System.out.println("1 userId :" + userId);
-		return bookreviewService.getAllBookReviewsByUserId(userId);
+	@GetMapping("/userid/{id}")
+	public List<BookReviewDTO> showReview(@PathVariable String id) throws EShelfException {
+		System.out.println("1 userId :" + id);
+		return bookreviewService.getAllBookReviewsByUserId(id);
 	}
 
 	@GetMapping("/delete")
