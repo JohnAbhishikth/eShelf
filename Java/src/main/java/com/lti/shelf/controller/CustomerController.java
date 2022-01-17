@@ -31,7 +31,7 @@ public class CustomerController {
 	public String registerCustomer(@RequestBody CustomerDTO customerDTO) {
 		try {
 			customerService.registerCustomer(customerDTO);
-			return "Data Submitted Successfully";
+			return "Registration Completed";
 		} catch (EShelfException e) {
 			return e.getMessage();
 		}
@@ -47,7 +47,7 @@ public class CustomerController {
 	public String updateCustomer(@RequestBody CustomerDTO customerDTO) {
 		try {
 			customerService.updateCustomer(customerDTO);
-			return "Data updated successfully";
+			return "Details Updated Successfully";
 		} catch (EShelfException e) {
 			return e.getMessage();
 		}
