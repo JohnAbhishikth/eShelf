@@ -1,0 +1,28 @@
+Customer
+	Register - add proper successful st.
+	update - ""same""
+	loginCustomer - Check code quality
+
+Address
+	getCustById - ""same""
+	delete - ""same""
+	deleteAddress - check code quality
+	searchCustomerByAddressId - check code quality
+
+Book
+	searchBookByAuthor - change method
+	searchBookByCategory - change method
+	deleteBook - Change Mapping
+
+BookReview
+	Check and Update all methods
+	check code quality
+
+ShoppingCartItem
+	Change and update all Endpoints
+	addShoppingCartItem - change Method
+	updateShoppingCartItem - add Method
+	removeItem - add proper successful st.
+	removeAllCartItems - add proper successful st.
+
+	

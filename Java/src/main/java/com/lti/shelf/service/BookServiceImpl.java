@@ -138,7 +138,7 @@ public class BookServiceImpl implements BookService {
 			}
 			return bookDtoList;
 		} else {
-			throw new EShelfException("Book ID cannot be null");
+			throw new EShelfException("Author cannot be null");
 		}
 	}
 

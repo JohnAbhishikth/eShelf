@@ -23,6 +23,7 @@ import com.lti.shelf.service.AddressService;
 @CrossOrigin
 @RequestMapping("/address")
 public class AddressController {
+
 	@Autowired
 	AddressService addressService;
 
