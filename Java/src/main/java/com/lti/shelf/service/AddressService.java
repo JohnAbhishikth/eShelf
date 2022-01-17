@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.lti.shelf.dto.AddressDTO;
 import com.lti.shelf.dto.CustomerDTO;
-import com.lti.shelf.entity.Address;
 import com.lti.shelf.exception.EShelfException;
 
 public interface AddressService {

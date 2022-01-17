@@ -3,7 +3,6 @@ package com.lti.shelf.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,7 +34,7 @@ public class BookController {
 		}
 		return "Book Added Successfully!!!";
 	}
-	
+
 	@PostMapping("/update")
 	@ResponseBody
 	public String updateBook(@RequestBody BookDTO bookDTO) {
@@ -46,47 +45,38 @@ public class BookController {
 		}
 		return "Book Updated!!!";
 	}
-	
+
 	@GetMapping("/getall")
-	public List<BookDTO> getAllBooks() throws EShelfException{
-		
-		 List<BookDTO> list = bookService.getAllBooks();
-		 return list;
+	public List<BookDTO> getAllBooks() throws EShelfException {
+		return bookService.getAllBooks();
 	}
-	
+
 	@GetMapping("/getbyid/{id}")
 	@ResponseBody
-	public BookDTO getBookById(@PathVariable String id) throws EShelfException{
+	public BookDTO getBookById(@PathVariable String id) throws EShelfException {
 		return bookService.searchBookById(id);
 	}
-	
+
 	@GetMapping("/deletebyid/{id}")
 	@ResponseBody
-	public String deleteBook(@PathVariable String id) throws EShelfException{
-	 bookService.deleteBook(id);
-	return "Book Deleted Successfully!!!";
+	public String deleteBook(@PathVariable String id) throws EShelfException {
+		try {
+			bookService.deleteBook(id);
+			return "Book Deleted Successfully!!!";
+		} catch (Exception e) {
+			return e.getMessage();
+		}
 	}
-	
+
 	@GetMapping("/getbyauthor/{author}")
 	@ResponseBody
-	public List<BookDTO> searchBookByAuthor(@PathVariable String author) throws EShelfException{
+	public List<BookDTO> searchBookByAuthor(@PathVariable String author) throws EShelfException {
 		return bookService.searchBookByAuthor(author);
 	}
-	
+
 	@GetMapping("/getbycategory/{category}")
 	@ResponseBody
-	public List<BookDTO> searchBookByCategory(@PathVariable String category) throws EShelfException{
+	public List<BookDTO> searchBookByCategory(@PathVariable String category) throws EShelfException {
 		return bookService.searchBookByCategory(category);
 	}
 }
-
-
-
-
-
-
-
-
-
-
-

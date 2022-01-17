@@ -424,4 +424,18 @@ class EShelfApplicationTests implements Tests {
 			shoppingCartItemRepository.findById(shoppingCartItemPK).get();
 		});
 	}
+
+	@Test
+	void getReviews() {
+		BookReviewPK id = new BookReviewPK();
+		id.setUserId("c1");id.setInventoryId("b1");
+		Optional<BookReview> findById = bookReviewRepository.findById(id);
+		if (findById.isPresent())
+			System.out.println(findById.get());
+		else
+			System.out.println("Not present");
+		
+//		bookReviewRepository.s
+	}
+
 }
