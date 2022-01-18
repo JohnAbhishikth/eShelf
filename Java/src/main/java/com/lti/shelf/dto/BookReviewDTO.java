@@ -8,7 +8,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class BookReviewDTO {
-	int userId;
+	String userId;
 	String inventoryId;
 	int rating;
 	String reviews;

@@ -19,7 +19,7 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public void addBook(BookDTO bookDto) throws EShelfException {
-		if (bookDto != null || bookDto.getInventoryId() != null) {
+		if (bookDto != null && bookDto.getInventoryId() != null) {
 			Optional<Book> findById = bookRepository.findById(bookDto.getInventoryId());
 			if (findById.isPresent())
 				throw new EShelfException("Book already Available");
@@ -41,7 +41,7 @@ public class BookServiceImpl implements BookService {
 		try {
 			List<Book> bookList = bookRepository.findAll();
 			if (bookList.isEmpty())
-				throw new EShelfException("");
+				throw new EShelfException("No Books Available");
 			List<BookDTO> bookDtoList = new ArrayList<>();
 
 			for (Book book : bookList) {
@@ -60,6 +60,7 @@ public class BookServiceImpl implements BookService {
 			throw e;
 		}
 	}
+
 // Update Not Finished
 	@Override
 	public boolean updateBook(BookDTO bookDto) throws EShelfException {
@@ -78,8 +79,7 @@ public class BookServiceImpl implements BookService {
 				} catch (Exception e) {
 					throw new EShelfException("Unable to Save Book");
 				}
-			}
-			else {
+			} else {
 				throw new EShelfException("Book ID not present");
 			}
 			return true;
@@ -90,81 +90,76 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public boolean deleteBook(String inventoryId) throws EShelfException {
-		if(inventoryId!=null) {
+		if (inventoryId != null) {
 			Optional<Book> findById = bookRepository.findById(inventoryId);
-			if(!findById.isPresent())
+			if (!findById.isPresent())
 				throw new EShelfException("Cannot find the Book ID");
 			bookRepository.deleteById(inventoryId);
-		return true;
-		}
-		else {
+			return true;
+		} else {
 			throw new EShelfException("Book ID cannot be null");
 		}
 	}
 
 	@Override
 	public BookDTO searchBookById(String inventoryId) throws EShelfException {
-		if(inventoryId!=null) {
-		Optional<Book> findById = bookRepository.findById(inventoryId);
-		if(!findById.isPresent())
-			throw new EShelfException("Cannot find the Book ID");
-		Book book= findById.get();
-		BookDTO bookDto = new BookDTO();
-		bookDto.setInventoryId(inventoryId);
-		bookDto.setBookName(book.getAuthorName());
-		bookDto.setAuthorName(book.getAuthorName());
-		bookDto.setBookCount(book.getBookCount());
-		bookDto.setPrice(book.getPrice());
-		bookDto.setBookCategory(book.getBookCategory());
-		return bookDto;
-		}
-		else {
+		if (inventoryId != null) {
+			Optional<Book> findById = bookRepository.findById(inventoryId);
+			if (!findById.isPresent())
+				throw new EShelfException("Cannot find the Book ID");
+			Book book = findById.get();
+			BookDTO bookDto = new BookDTO();
+			bookDto.setInventoryId(inventoryId);
+			bookDto.setBookName(book.getAuthorName());
+			bookDto.setAuthorName(book.getAuthorName());
+			bookDto.setBookCount(book.getBookCount());
+			bookDto.setPrice(book.getPrice());
+			bookDto.setBookCategory(book.getBookCategory());
+			return bookDto;
+		} else {
 			throw new EShelfException("Book ID cannot be null");
 		}
 	}
 
 	@Override
 	public List<BookDTO> searchBookByAuthor(String author) throws EShelfException {
-		if(author!=null) {
+		if (author != null) {
 			List<Book> searchBookByAuthor = bookRepository.findByAuthor(author);
 			List<BookDTO> bookDtoList = new ArrayList<>();
-				for(Book book:searchBookByAuthor) {
-						BookDTO bookDto = new BookDTO(); 
-						bookDto.setInventoryId(book.getInventoryId());
-						bookDto.setBookName(book.getBookName());
-						bookDto.setAuthorName(author);
-						bookDto.setBookCount(book.getBookCount());
-						bookDto.setPrice(book.getPrice());
-						bookDto.setBookCategory(book.getBookCategory());
-						bookDtoList.add(bookDto);
-				}
+			for (Book book : searchBookByAuthor) {
+				BookDTO bookDto = new BookDTO();
+				bookDto.setInventoryId(book.getInventoryId());
+				bookDto.setBookName(book.getBookName());
+				bookDto.setAuthorName(author);
+				bookDto.setBookCount(book.getBookCount());
+				bookDto.setPrice(book.getPrice());
+				bookDto.setBookCategory(book.getBookCategory());
+				bookDtoList.add(bookDto);
+			}
 			return bookDtoList;
-			}
-			else {
-				throw new EShelfException("Book ID cannot be null");
-			}
+		} else {
+			throw new EShelfException("Author cannot be null");
+		}
 	}
 
 	@Override
 	public List<BookDTO> searchBookByCategory(String category) throws EShelfException {
-		if(category!=null) {
+		if (category != null) {
 			List<Book> searchBookByCategory = bookRepository.findByCategory(category);
 			List<BookDTO> bookDtoList = new ArrayList<>();
-				for(Book book:searchBookByCategory) {
-						BookDTO bookDto = new BookDTO(); 
-						bookDto.setInventoryId(book.getInventoryId());
-						bookDto.setBookName(book.getBookName());
-						bookDto.setAuthorName(book.getAuthorName());
-						bookDto.setBookCount(book.getBookCount());
-						bookDto.setPrice(book.getPrice());
-						bookDto.setBookCategory(category);
-						bookDtoList.add(bookDto);
-				}
+			for (Book book : searchBookByCategory) {
+				BookDTO bookDto = new BookDTO();
+				bookDto.setInventoryId(book.getInventoryId());
+				bookDto.setBookName(book.getBookName());
+				bookDto.setAuthorName(book.getAuthorName());
+				bookDto.setBookCount(book.getBookCount());
+				bookDto.setPrice(book.getPrice());
+				bookDto.setBookCategory(category);
+				bookDtoList.add(bookDto);
+			}
 			return bookDtoList;
-			}
-			else {
-				throw new EShelfException("No Category Present");
-			}
+		} else {
+			throw new EShelfException("No Category Present");
+		}
 	}
 }
-

@@ -1,6 +1,5 @@
 package com.lti.shelf.service;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -23,7 +22,7 @@ public class AddressServiceImpl implements AddressService {
 
 	@Autowired
 	AddressRepository addressRepository;
-
+	
 	@Autowired
 	CustomerRepository customerRepository;
 
