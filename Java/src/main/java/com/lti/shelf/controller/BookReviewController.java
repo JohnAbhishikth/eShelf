@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,8 +41,12 @@ public class BookReviewController {
 
 	@PostMapping("/update")
 	@ResponseBody
-	public String updateReview(@RequestBody BookReviewDTO bookReviewDTO) {
-		return null;
+	public String updateReview(@RequestBody BookReviewDTO bookReviewDTO) throws EShelfException {
+		boolean bool = bookreviewService.updateReview(bookReviewDTO);
+		if(bool) {
+		return "updated Successfully";
+		}
+		return "Updation can't be Performed";
 	}
 
 	@GetMapping("/bookid/{inventoryId}")
@@ -51,13 +56,16 @@ public class BookReviewController {
 
 	@GetMapping("/userid/{id}")
 	public List<BookReviewDTO> showReview(@PathVariable String id) throws EShelfException {
-		System.out.println("1 userId :" + id);
 		return bookreviewService.getAllBookReviewsByUserId(id);
 	}
 
-	@GetMapping("/delete")
+	@DeleteMapping("/delete")
 	@ResponseBody
 	public String deleteReview(@RequestBody BookReviewDTO bookReviewDTO) throws EShelfException {
-		return null;
+		boolean bool = bookreviewService.deletereview(bookReviewDTO.getUserId(), bookReviewDTO.getInventoryId());
+		if(bool) {
+			return "Book Review Deleted Successfully";
+		}
+		return "Deletion can't be performed";	
 	}
 }
