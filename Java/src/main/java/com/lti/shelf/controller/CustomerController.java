@@ -44,7 +44,7 @@ public class CustomerController {
 	public String updateCustomer(@RequestBody CustomerDTO customerDTO) {
 		try {
 			customerService.updateCustomer(customerDTO);
-			return "Details Updated Successfully";
+			return "Customer Details Updated Successfully";
 		} catch (EShelfException e) {
 			return e.getMessage();
 		}
@@ -52,12 +52,6 @@ public class CustomerController {
 
 	@PostMapping("/login")
 	public CustomerDTO loginCustomer(@RequestBody LoginDTO loginDto) throws EShelfException {
-		try {
-			CustomerDTO dto = customerService.loginCustomer(loginDto);
-			return dto;
-		} catch (EShelfException e) {
-			throw e;
-		}
+			 return customerService.loginCustomer(loginDto);
 	}
-
 }

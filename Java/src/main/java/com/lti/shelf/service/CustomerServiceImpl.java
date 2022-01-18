@@ -32,11 +32,9 @@ public class CustomerServiceImpl implements CustomerService {
 				customer.setPassword(customerDto.getPassword());
 				customerRepo.save(customer);
 			} catch (Exception e) {
-				throw new EShelfException("Invalid Customer");
+				throw new EShelfException("Invalid Customer! Try Again");
 			}
-		} else {
-			System.out.println("Enter valid Customer");
-		}
+		} 
 	}
 
 	@Override
@@ -44,26 +42,28 @@ public class CustomerServiceImpl implements CustomerService {
 		if (customerDto != null) {
 			Optional<Customer> cust = customerRepo.findById(customerDto.getUserId());
 			if (!cust.isPresent())
-				throw new EShelfException("Invalid Customer");
+				throw new EShelfException("Enter valid Customer");
 			try {
 				Customer customer = cust.get();
-				customer.setUserId(customerDto.getUserId());
+				//customer.setUserId(customerDto.getUserId());
 				customer.setName(customerDto.getName());
 				customer.setEmail(customerDto.getEmail());
 				customer.setPhoneNumber(customerDto.getPhoneNumber());
 				customer.setPassword(customerDto.getPassword());
 				customerRepo.save(customer);
-				System.out.println("Update Successful");
 			} catch (Exception e) {
 				throw new EShelfException("Invalid Customer");
 			}
 		} else {
-			System.out.println("Invalid Customer");
+			throw new EShelfException("Invalid Customer");
 		}
 	}
 
 	@Override
 	public CustomerDTO getCustomerById(String userId) throws EShelfException {
+		if (userId == null) {
+			throw new EShelfException("UserId can't be null");	
+		}
 		Optional<Customer> findByID = customerRepo.findById(userId);
 		if (!findByID.isPresent())
 			throw new EShelfException("Can not find Customer");
@@ -73,12 +73,15 @@ public class CustomerServiceImpl implements CustomerService {
 		dto.setEmail(customer.getEmail());
 		dto.setPhoneNumber(customer.getPhoneNumber());
 		dto.setUserId(customer.getUserId());
-		dto.setPassword(customer.getPassword());
+		//dto.setPassword(customer.getPassword());
 		return dto;
 	}
 
 	@Override
 	public CustomerDTO loginCustomer(LoginDTO loginDTO) throws EShelfException {
+		if (loginDTO==null||loginDTO.getLoginId()==null) {
+			throw new EShelfException("Login Credentials must not be null");
+		}
 		Optional<Customer> customer = customerRepo.findById(loginDTO.getLoginId());
 		if (!customer.isPresent())
 			throw new EShelfException("Invalid UserId");
@@ -94,6 +97,5 @@ public class CustomerServiceImpl implements CustomerService {
 		} else {
 			throw new EShelfException("Invalid Password");
 		}
-
 	}
 }
