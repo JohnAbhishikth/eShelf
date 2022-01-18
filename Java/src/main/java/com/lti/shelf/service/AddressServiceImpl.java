@@ -37,7 +37,7 @@ public class AddressServiceImpl implements AddressService {
 
 			Optional<Customer> customer = customerRepository.findById(addressDto.getUserId());
 			if (!customer.isPresent()) {
-				throw new EShelfException("user not present");
+				throw new EShelfException("user not available");
 			}
 			// Address address = new Address(addressDto.getAddressId(),
 			// addressDto.getRelationship(), addressDto.getCity(), addressDto.getState(),
@@ -146,7 +146,7 @@ public class AddressServiceImpl implements AddressService {
 					throw new EShelfException("Invalid details");
 				}
 			} else {
-				throw new EShelfException("Address is not present");
+				throw new EShelfException("Address doesn't belongs to Customer");
 			}
 		} else {
 			throw new EShelfException("addressID or userID not be Null");
@@ -173,7 +173,7 @@ public class AddressServiceImpl implements AddressService {
 				customerDto.setEmail(customer.getEmail());
 				customerDto.setPhoneNumber(customer.getPhoneNumber());
 			} catch (Exception e) {
-				throw new EShelfException("No Customer is present");
+				throw new EShelfException("customer is not available");
 			}
 			return customerDto;
 		} else {

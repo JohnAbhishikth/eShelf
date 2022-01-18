@@ -51,30 +51,20 @@ public class AddressController {
 
 	@DeleteMapping("/delete")
 	@ResponseBody
-	public String deleteAddress(@RequestBody AddressDTO addressDTO) {
-		try {
-			addressService.deleteAddress(addressDTO.getAddressId(), addressDTO.getUserId());
-
-		} catch (EShelfException e) {
-			return e.getMessage();
-		}
+	public String deleteAddress(@RequestBody AddressDTO addressDTO) throws EShelfException {
+		addressService.deleteAddress(addressDTO.getAddressId(), addressDTO.getUserId());
 		return "Deleted Successfully";
 	}
 
 	@GetMapping("/get/{userId}")
 	public List<AddressDTO> getAddressById(@PathVariable String userId) throws EShelfException {
-
-		List<AddressDTO> addressList = addressService.getAddressByUserId(userId);
-
-		return addressList;
+		return addressService.getAddressByUserId(userId);
 	}
 
 	@GetMapping("/get/customer/{addressId}")
 	public CustomerDTO getCustomerById(@PathVariable String addressId) throws EShelfException {
+		return addressService.searchCustomerByAddressId(addressId);
 
-		CustomerDTO customer = addressService.searchCustomerByAddressId(addressId);
-
-		return customer;
 	}
 
 }

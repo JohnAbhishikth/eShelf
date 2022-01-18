@@ -39,21 +39,21 @@ public class ShoppingCartItemController {
 
 	}
 
-	@PostMapping("/additem")
+	@PostMapping("/add")
 	@ResponseBody
 	public String addShoppingCartItem(@RequestBody ShoppingCartDTO shoppingCartDto) throws EShelfException {
 		shoppingCartItemService.addItemToCart(shoppingCartDto);
 		return "item added successfully";
 	}
 
-	@PutMapping("/updateitem")
+	@PutMapping("/update")
 	@ResponseBody
 	public String updateShoppingCartItem(@RequestBody ShoppingCartDTO shoppingCartDto) {
 		return null;
 
 	}
 
-	@DeleteMapping("/removeitem")
+	@DeleteMapping("/remove")
 	public String removeCartItem(@RequestBody ShoppingCartDTO shoppingCartDto) throws EShelfException {
 		boolean bool = shoppingCartItemService.deleteOneShoppingCartItem(shoppingCartDto.getUserId(),
 				shoppingCartDto.getInventoryId());
