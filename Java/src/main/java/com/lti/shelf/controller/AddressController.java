@@ -61,5 +61,4 @@ public class AddressController {
 	public CustomerDTO getCustomerById(@PathVariable String addressId) throws EShelfException {
 		return addressService.searchCustomerByAddressId(addressId);
 	}
-
 }
