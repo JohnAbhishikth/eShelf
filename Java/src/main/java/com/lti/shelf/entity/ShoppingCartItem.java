@@ -28,7 +28,7 @@ public class ShoppingCartItem implements Serializable {
 	@Getter
 	@Setter
 	@EmbeddedId
-//	Composite Pritmary Key
+//	Composite Primary Key
 	private ShoppingCartItemPK id;
 
 	@Getter

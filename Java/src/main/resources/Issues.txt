@@ -4,10 +4,10 @@ Customer
 	loginCustomer - Check code quality
 
 Address
-	getCustById - ""same""
-	delete - ""same""
-	deleteAddress - check code quality
-	searchCustomerByAddressId - check code quality
+//	getCustById - ""same""
+//	delete - ""same""
+//	deleteAddress - check code quality
+//	searchCustomerByAddressId - check code quality
 
 Book
 	searchBookByAuthor - change method
@@ -19,10 +19,10 @@ BookReview
 	check code quality
 
 ShoppingCartItem
-	Change and update all Endpoints
-	addShoppingCartItem - change Method
-	updateShoppingCartItem - add Method
-	removeItem - add proper successful st.
-	removeAllCartItems - add proper successful st.
+//	Change and update all Endpoints
+//	addShoppingCartItem - change Method
+//	updateShoppingCartItem - add Method
+//	removeItem - add proper successful st.
+//	removeAllCartItems - add proper successful st.
 
 	

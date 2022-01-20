@@ -28,8 +28,9 @@ public class ShoppingCartItemPK implements Serializable {
 
 	@Column(name = "inventory_id", insertable = false, updatable = false)
 	private String inventoryId;
+	
 
 	@Column(name = "user_id", insertable = false, updatable = false)
 	private String userId;
-
+	
 }

@@ -33,7 +33,7 @@ public class ShoppingCartItemController {
 	@Autowired
 	ShoppingCartItemService shoppingCartItemService;
 
-	@GetMapping("/show/{userId}")
+	@GetMapping("/get/{userId}")
 	public List<ShoppingCartDTO> showShoopingCartItems(@PathVariable String userId) throws EShelfException {
 		return shoppingCartItemService.getCartByUserId(userId);
 
@@ -46,13 +46,14 @@ public class ShoppingCartItemController {
 		return "item added successfully";
 	}
 
+
 	@PutMapping("/update")
 	@ResponseBody
-	public String updateShoppingCartItem(@RequestBody ShoppingCartDTO shoppingCartDto) {
-		return null;
-
+	public String updateShoppingCartItem(@RequestBody ShoppingCartDTO shoppingCartDto) throws EShelfException {
+		shoppingCartItemService.updateShoppingCart(shoppingCartDto);
+		return "updated successfully";	
 	}
-
+	
 	@DeleteMapping("/remove")
 	public String removeCartItem(@RequestBody ShoppingCartDTO shoppingCartDto) throws EShelfException {
 		boolean bool = shoppingCartItemService.deleteOneShoppingCartItem(shoppingCartDto.getUserId(),

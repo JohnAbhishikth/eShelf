@@ -47,17 +47,8 @@ public class AddressController {
 
 	@DeleteMapping("/delete")
 	@ResponseBody
-<<<<<<< HEAD
 	public String deleteAddress(@RequestBody AddressDTO addressDTO) throws EShelfException {
-		addressService.deleteAddress(addressDTO.getAddressId(), addressDTO.getUserId());
-=======
-	public String deleteAddress(@RequestBody AddressDTO addressDTO) {
-		try {
 			addressService.deleteAddress(addressDTO.getAddressId(), addressDTO.getUserId());
-		} catch (EShelfException e) {
-			return e.getMessage();
-		}
->>>>>>> 3082bfc4f392aeb8741c9dd095c4d4b4be980b34
 		return "Deleted Successfully";
 	}
 
@@ -69,10 +60,6 @@ public class AddressController {
 	@GetMapping("/get/customer/{addressId}")
 	public CustomerDTO getCustomerById(@PathVariable String addressId) throws EShelfException {
 		return addressService.searchCustomerByAddressId(addressId);
-<<<<<<< HEAD
-
-=======
->>>>>>> 3082bfc4f392aeb8741c9dd095c4d4b4be980b34
 	}
 
 }

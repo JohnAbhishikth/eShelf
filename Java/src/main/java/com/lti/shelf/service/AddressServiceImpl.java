@@ -38,10 +38,6 @@ public class AddressServiceImpl implements AddressService {
 			if (!customer.isPresent()) {
 				throw new EShelfException("user not available");
 			}
-			// Address address = new Address(addressDto.getAddressId(),
-			// addressDto.getRelationship(), addressDto.getCity(), addressDto.getState(),
-			// addressDto.getZip());
-
 			Address address = new Address();
 
 			try {
@@ -56,13 +52,16 @@ public class AddressServiceImpl implements AddressService {
 				throw new EShelfException("Invalid Address");
 			}
 		} else {
-			System.out.println("Enter all details");
-		}
+			throw new EShelfException("Enter Valid Details");}
 	}
 
 	@Override
 	public List<AddressDTO> getAddressByUserId(String userId) throws EShelfException {
-		if (userId != null) {
+		if (userId != null) {			
+			Optional<Customer> custOptional = customerRepository.findById(userId);
+			if (!custOptional.isPresent()) {
+				throw new EShelfException("user not present");
+			}
 			List<Address> findAllById = addressRepository.findAllByUserId(userId);
 
 			List<AddressDTO> addressDTOList = new ArrayList<>();
@@ -79,7 +78,7 @@ public class AddressServiceImpl implements AddressService {
 					addressDTOList.add(addressDto);
 				}
 			} catch (Exception e) {
-				throw new EShelfException("No Details");
+				throw new EShelfException("customer Details are not available");
 			}
 			return addressDTOList;
 		} else {
@@ -126,16 +125,16 @@ public class AddressServiceImpl implements AddressService {
 		if (addressId != null && userId != null) {
 			Optional<Customer> customerOptional = customerRepository.findById(userId);
 			if (!customerOptional.isPresent()) {
-				throw new EShelfException("user not present");
+				throw new EShelfException("customer "+ userId+" doesn't exists");
 			}
 			Customer cust = customerOptional.get();
 			
 			Optional<Address> addressOptional = addressRepository.findById(addressId);
 			if(!addressOptional.isPresent()) {
-				throw new EShelfException("Address is Not registered");
+				throw new EShelfException("Address "+addressId+" doesn't belongs to Customer " + userId);
 			}
 			Address address = addressOptional.get();
-			if (addressOptional.isPresent() && address.getCustomerLogin().getUserId().equals(userId) ) {	
+			if (address.getCustomerLogin().getUserId().equals(userId) ) {	
 				try { 
 					address.setCustomerLogin(cust);
 					address.setAddressId(addressId);
@@ -145,7 +144,7 @@ public class AddressServiceImpl implements AddressService {
 					throw new EShelfException("Invalid details");
 				}
 			} else {
-				throw new EShelfException("Address doesn't belongs to Customer");
+				throw new EShelfException("Cutomer and Address don't match");
 			}
 		} else {
 			throw new EShelfException("addressID or userID not be Null");
@@ -160,19 +159,24 @@ public class AddressServiceImpl implements AddressService {
 			CustomerDTO customerDto = new CustomerDTO();
 
 			Optional<Address> findAddress = addressRepository.findById(addressId);
+			if(!findAddress.isPresent()) {
+				throw new EShelfException("customer is not available with addressId:"+ addressId);
+			}
 			Address address = findAddress.get();
 			String userId = address.getCustomerLogin().getUserId();
 
 			Optional<Customer> findCustomer = customerRepository.findById(userId);
+			if(!findCustomer.isPresent()) {
+				throw new EShelfException("customer is not available");
+			}
 			Customer customer = findCustomer.get();
-
 			try {
 				customerDto.setUserId(customer.getUserId());
 				customerDto.setName(customer.getName());
 				customerDto.setEmail(customer.getEmail());
 				customerDto.setPhoneNumber(customer.getPhoneNumber());
 			} catch (Exception e) {
-				throw new EShelfException("customer is not available");
+				throw new EShelfException("Enter Valid details");
 			}
 			return customerDto;
 		} else {

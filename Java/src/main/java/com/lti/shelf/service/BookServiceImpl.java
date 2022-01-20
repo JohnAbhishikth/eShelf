@@ -54,7 +54,6 @@ public class BookServiceImpl implements BookService {
 				bookDTO.setBookCount(book.getBookCount());
 				bookDtoList.add(bookDTO);
 			}
-
 			return bookDtoList;
 		} catch (Exception e) {
 			throw e;
